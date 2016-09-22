@@ -11,6 +11,10 @@ issues_url 'https://github.com/chef-cookbooks/jenkins/issues'
 
 recipe 'jenkins::master', 'Installs a Jenkins master'
 
-depends 'apt',   '>= 2.0'
-depends 'runit', '~> 1.7'
-depends 'yum',   '~> 3.0'
+if Chef::Platform.windows?
+  depends 'windows'
+else
+  depends 'apt',   '>= 2.0'
+  depends 'runit', '~> 1.7'
+  depends 'yum',   '~> 3.0'
+end

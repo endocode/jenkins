@@ -33,7 +33,7 @@ default['jenkins']['master'].tap do |master|
   #   node.set['jenkins']['master']['install_method'] = 'war'
   #
   master['install_method'] = case node['platform_family']
-                             when 'debian', 'rhel' then 'package'
+                             when 'debian', 'rhel','windows' then 'package'
                              else 'war'
                              end
 

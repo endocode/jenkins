@@ -69,6 +69,29 @@ when 'rhel'
     mode     '0644'
     notifies :restart, 'service[jenkins]', :immediately
   end
+when 'windows'
+
+  directory "C:\\tmp" do
+    action :create
+    recursive true
+  end
+
+  remote_file "C:\\tmp\\jenkins.zip" do
+     source 'http://mirrors.jenkins-ci.org/windows/jenkins-1.658.zip'
+  end
+
+  windows_zipfile 'jenkins_zip' do
+    action    :unzip
+    path      'C:\\tmp\\jenkins'
+    source    'C:\\tmp\\jenkins.zip'
+    overwrite true
+  end
+
+  windows_package 'Jenkins' do
+    source 'C:\\tmp\jenkins\jenkins.msi'
+    installer_type :msi
+  end
+
 end
 
 service 'jenkins' do
